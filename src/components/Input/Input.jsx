@@ -1,16 +1,10 @@
 import { Formik, Field, Form } from 'formik';
 import * as yup from 'yup';
-import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 
 export default function Input() {
   const dispatch = useDispatch();
-  const contacts = useSelector(({ contacts }) => contacts);
-
-  function checkName(name) {
-    return contacts.find(ob => name === ob.name);
-  }
 
   const initialValues = {
     name: '',
@@ -23,10 +17,6 @@ export default function Input() {
   });
 
   function onHandleSubmit(values, { resetForm }) {
-    values.id = nanoid(5);
-    if (checkName(values.name)) {
-      return alert(`${values.name} is already in contacts`);
-    }
     dispatch(addContact(values));
     resetForm();
   }

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 
 const initialState = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -11,6 +12,12 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {
     addContact: (state, action) => {
+      if (state.find(({ name }) => name === action.payload.name)) {
+        return alert(`${action.payload} is already in contacts`);
+      }
+
+      action.payload.id = nanoid(5);
+
       state.push(action.payload);
     },
     deleteContact: (state, action) => {

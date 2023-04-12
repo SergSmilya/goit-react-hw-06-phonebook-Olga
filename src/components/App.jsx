@@ -2,16 +2,10 @@ import { useSelector } from 'react-redux';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import Input from './Input/Input';
-import { useState } from 'react';
 
 export function App() {
   const contacts = useSelector(({ contacts }) => contacts);
-
-  const [filter, setFilter] = useState('');
-
-  function onFilterChange(e) {
-    setFilter(e.target.attributes.name.ownerElement.value.toLowerCase());
-  }
+  const filter = useSelector(({ filters }) => filters);
 
   function onFilter() {
     return contacts.filter(({ name }) => name.toLowerCase().includes(filter));
@@ -32,7 +26,7 @@ export function App() {
 
       <Input />
 
-      <Filter onFilterChange={onFilterChange} />
+      <Filter />
 
       <Contacts contacts={onFilter()} />
     </div>
